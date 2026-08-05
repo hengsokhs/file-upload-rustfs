@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @ConfigurationProperties(prefix = "storage.rustfs")
 public class S3Properties {
-  private URI url;
+  private URI endpoint;
   private String region;
   private String accessKey;
   private String secretKey;

@@ -25,7 +25,7 @@ public class S3Config {
     );
 
     return S3Client.builder()
-        .endpointOverride(properties.getUrl())
+        .endpointOverride(properties.getEndpoint())
         .region(Region.of(properties.getRegion()))
         .credentialsProvider(
             StaticCredentialsProvider.create(credentials)
@@ -57,7 +57,7 @@ public class S3Config {
     );
 
     return S3Presigner.builder()
-        .endpointOverride(properties.getUrl())
+        .endpointOverride(properties.getEndpoint())
         .region(Region.of(properties.getRegion()))
         .credentialsProvider(
             StaticCredentialsProvider.create(credentials)
