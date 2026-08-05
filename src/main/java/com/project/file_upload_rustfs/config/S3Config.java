@@ -18,15 +18,15 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 public class S3Config {
 
   @Bean(destroyMethod = "close")
-  S3Client s3Client(S3Properties s3Properties) {
+  S3Client s3Client(S3Properties properties) {
     AwsBasicCredentials credentials = AwsBasicCredentials.create(
-        s3Properties.getAccessKey(),
-        s3Properties.getSecretKey()
+        properties.getAccessKey(),
+        properties.getSecretKey()
     );
 
     return S3Client.builder()
-        .endpointOverride(s3Properties.getUrl())
-        .region(Region.of(s3Properties.getRegion()))
+        .endpointOverride(properties.getUrl())
+        .region(Region.of(properties.getRegion()))
         .credentialsProvider(
             StaticCredentialsProvider.create(credentials)
         )
@@ -50,15 +50,15 @@ public class S3Config {
   }
 
   @Bean
-  S3Presigner s3Presigner(S3Properties s3Properties) {
+  S3Presigner s3Presigner(S3Properties properties) {
     AwsBasicCredentials credentials = AwsBasicCredentials.create(
-        s3Properties.getAccessKey(),
-        s3Properties.getSecretKey()
+        properties.getAccessKey(),
+        properties.getSecretKey()
     );
 
     return S3Presigner.builder()
-        .endpointOverride(s3Properties.getUrl())
-        .region(Region.of(s3Properties.getRegion()))
+        .endpointOverride(properties.getUrl())
+        .region(Region.of(properties.getRegion()))
         .credentialsProvider(
             StaticCredentialsProvider.create(credentials)
         )
