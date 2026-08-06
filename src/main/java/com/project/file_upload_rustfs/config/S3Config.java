@@ -49,7 +49,7 @@ public class S3Config {
         .build();
   }
 
-  @Bean
+  @Bean(destroyMethod = "close")
   S3Presigner s3Presigner(S3Properties properties) {
     AwsBasicCredentials credentials = AwsBasicCredentials.create(
         properties.getAccessKey(),
