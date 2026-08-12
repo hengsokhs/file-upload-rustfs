@@ -49,26 +49,26 @@ public class S3Config {
         .build();
   }
 
-  @Bean
-  S3Presigner s3Presigner(S3Properties properties) {
-    AwsBasicCredentials credentials = AwsBasicCredentials.create(
-        properties.getAccessKey(),
-        properties.getSecretKey()
-    );
-
-    return S3Presigner.builder()
-        .endpointOverride(properties.getEndpoint())
-        .region(Region.of(properties.getRegion()))
-        .credentialsProvider(
-            StaticCredentialsProvider.create(credentials)
-        )
-        .serviceConfiguration(
-            S3Configuration.builder()
-                .pathStyleAccessEnabled(true)
-                .checksumValidationEnabled(false)
-                .build()
-        )
-        .build();
-  }
+//  @Bean
+//  S3Presigner s3Presigner(S3Properties properties) {
+//    AwsBasicCredentials credentials = AwsBasicCredentials.create(
+//        properties.getAccessKey(),
+//        properties.getSecretKey()
+//    );
+//
+//    return S3Presigner.builder()
+//        .endpointOverride(properties.getEndpoint())
+//        .region(Region.of(properties.getRegion()))
+//        .credentialsProvider(
+//            StaticCredentialsProvider.create(credentials)
+//        )
+//        .serviceConfiguration(
+//            S3Configuration.builder()
+//                .pathStyleAccessEnabled(true)
+//                .checksumValidationEnabled(false)
+//                .build()
+//        )
+//        .build();
+//  }
 
 }

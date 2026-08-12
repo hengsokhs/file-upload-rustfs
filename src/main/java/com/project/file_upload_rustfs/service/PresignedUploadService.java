@@ -59,7 +59,6 @@ public class PresignedUploadService {
     PutObjectRequest putObjectRequest = PutObjectRequest.builder()
         .bucket(properties.getBucket())
         .key(key)
-        .contentType(request.getContentType())
         .build();
 
     PutObjectPresignRequest presignRequest =
@@ -76,7 +75,7 @@ public class PresignedUploadService {
         key,
         presignedRequest.url().toString(),
         "PUT",
-        request.getContentType(),
+        null,
         expiresAt
     );
   }
@@ -90,17 +89,17 @@ public class PresignedUploadService {
       throw new IllegalArgumentException("Filename is required");
     }
 
-    if (!ALLOWED_CONTENT_TYPES.contains(request.getContentType())) {
-      throw new IllegalArgumentException("Unsupported content type");
-    }
-
-    if (request.getSize() <= 0) {
-      throw new IllegalArgumentException("File must not be empty");
-    }
-
-    if (request.getSize() > MAX_FILE_SIZE) {
-      throw new IllegalArgumentException("File exceeds the 20MB limit");
-    }
+//    if (!ALLOWED_CONTENT_TYPES.contains(request.getContentType())) {
+//      throw new IllegalArgumentException("Unsupported content type");
+//    }
+//
+//    if (request.getSize() <= 0) {
+//      throw new IllegalArgumentException("File must not be empty");
+//    }
+//
+//    if (request.getSize() > MAX_FILE_SIZE) {
+//      throw new IllegalArgumentException("File exceeds the 20MB limit");
+//    }
   }
 
   private String getExtension(String filename) {
