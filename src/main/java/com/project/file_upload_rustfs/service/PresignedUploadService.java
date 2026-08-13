@@ -13,8 +13,10 @@ import java.util.Set;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
@@ -120,6 +122,22 @@ public class PresignedUploadService {
     }
 
     return extension;
+  }
+
+  public String createPreviewUrl(String key) {
+    GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            .bucket(properties.getBucket())
+            .key(key)
+            .build();
+
+    GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(15))
+            .getObjectRequest(getObjectRequest)
+            .build();
+
+    PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(presignRequest);
+
+    return presignedGetObjectRequest.url().toString();
   }
 
 }

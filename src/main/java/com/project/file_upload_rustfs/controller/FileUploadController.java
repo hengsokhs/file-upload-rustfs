@@ -2,6 +2,7 @@ package com.project.file_upload_rustfs.controller;
 
 import com.project.file_upload_rustfs.model.CreateUploadRequest;
 import com.project.file_upload_rustfs.model.CreateUploadResponse;
+import com.project.file_upload_rustfs.model.PreviewUploadResponse;
 import com.project.file_upload_rustfs.model.UploadedResultRustfsDTO;
 import com.project.file_upload_rustfs.service.FileStorageService;
 import com.project.file_upload_rustfs.service.PresignedUploadService;
@@ -50,8 +51,11 @@ public class FileUploadController {
   }
 
   @GetMapping("/preview")
-  public String preview(@RequestParam String key) {
-    return fileStorageService.createViewUrl(key);
+  public PreviewUploadResponse preview(@RequestParam String key) {
+//    return fileStorageService.createViewUrl(key);
+    String url = fileStorageService.createViewUrl(key);
+
+    return new PreviewUploadResponse(url);
   }
 
   @PostMapping("/upload/presign")

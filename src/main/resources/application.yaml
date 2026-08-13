@@ -13,6 +13,6 @@ storage:
   rustfs:
     endpoint: ${RUSTFS_URL:http://localhost:9000}
     region: ${RUSTFS_REGION:us-east-1}
-    access-key: ${RUSTFS_ACCESS_KEY:LOCALRUSTFSAPP}
-    secret-key: ${RUSTFS_SECRET_KEY:change-this-local-secret}
+    access-key: ${RUSTFS_ACCESS_KEY:SYSADM}
+    secret-key: ${RUSTFS_SECRET_KEY:SYS168}
     bucket: ${RUSTFS_BUCKET:uploads}
