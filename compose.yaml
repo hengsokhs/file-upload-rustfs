@@ -19,6 +19,12 @@ services:
       RUSTFS_CONSOLE_ADDRESS: "0.0.0.0:9001"
       RUSTFS_CONSOLE_ENABLE: "true"
 
+      # S3 API CORS - this is what your Next.js upload needs
+      RUSTFS_CORS_ALLOWED_ORIGINS: "http://localhost:3000"
+
+      # Optional: CORS for RustFS management console
+      RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS: "http://localhost:3000"
+
       RUSTFS_ACCESS_KEY: "${RUSTFS_ACCESS_KEY:-LOCALRUSTFSAPP}"
       RUSTFS_SECRET_KEY: "${RUSTFS_SECRET_KEY:-change-this-local-secret}"
 

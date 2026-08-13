@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 @Service
@@ -104,16 +105,18 @@ public class FileStorageService {
     GetObjectRequest getObjectRequest = GetObjectRequest.builder()
         .bucket(properties.getBucket())
         .key(key)
-        .responseContentDisposition("inline")
         .build();
 
-    PresignedGetObjectRequest presignedGetObjectRequest = s3Presigner.presignGetObject(
-        request -> request
-            .signatureDuration(Duration.ofMinutes(10))
+    GetObjectPresignRequest presignRequest =
+        GetObjectPresignRequest.builder()
+            .signatureDuration(Duration.ofMinutes(15))
             .getObjectRequest(getObjectRequest)
-    );
+            .build();
 
-    return presignedGetObjectRequest.url().toString();
+    PresignedGetObjectRequest presigned =
+        s3Presigner.presignGetObject(presignRequest);
+
+    return presigned.url().toString();
   }
 
 }
