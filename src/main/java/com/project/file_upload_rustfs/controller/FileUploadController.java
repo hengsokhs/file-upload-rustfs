@@ -52,9 +52,7 @@ public class FileUploadController {
 
   @GetMapping("/preview")
   public PreviewUploadResponse preview(@RequestParam String key) {
-//    return fileStorageService.createViewUrl(key);
     String url = fileStorageService.createViewUrl(key);
-
     return new PreviewUploadResponse(url);
   }
 

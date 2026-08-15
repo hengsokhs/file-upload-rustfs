@@ -50,7 +50,7 @@ public class S3Config {
   }
 
 //  @Bean
-//  S3Presigner s3Presigner(S3Properties properties) {
+//  S3Presgner s3Presigner(S3Properties properties) {
 //    AwsBasicCredentials credentials = AwsBasicCredentials.create(
 //        properties.getAccessKey(),
 //        properties.getSecretKey()
