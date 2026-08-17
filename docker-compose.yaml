@@ -46,8 +46,31 @@ services:
       retries: 10
       start_period: 20s
 
+  postgres:
+    image: postgres:16
+    container_name: postgres16
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+      POSTGRES_DB: appdb
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   rustfs-data:
+  postgres_data:
 
 
 # docker run -d --name rustfs --restart unless-stopped --env-file rustfs.env -p 127.0.0.1:9000:9000 -p 127.0.0.1:9001:9001 -v rustfs-data:/data rustfs/rustfs:latest /data

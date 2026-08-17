@@ -1,9 +1,8 @@
 package com.project.file_upload_rustfs.service;
 
-import com.project.file_upload_rustfs.config.S3PresignerConfig;
 import com.project.file_upload_rustfs.config.S3Properties;
-import com.project.file_upload_rustfs.model.CreateUploadRequest;
-import com.project.file_upload_rustfs.model.CreateUploadResponse;
+import com.project.file_upload_rustfs.model.PresignUploadUrlRequest;
+import com.project.file_upload_rustfs.model.PresignUploadUrlResponse;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,6 +10,8 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+
+import com.project.file_upload_rustfs.model.PresignPreviewUrlResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
@@ -26,15 +27,9 @@ public class PresignedUploadService {
 
   private static final Duration EXPIRATION = Duration.ofMinutes(5);
 
-  private static final long MAX_FILE_SIZE = 20L * 1024 * 1024;
+  private static final long MAX_FILE_SIZE = 2L * 1024 * 1024; // Limit 2MB
 
-  private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/webp",
-      "image/gif"
-      );
+  private static final Set<String> ALLOWED_FILE_EXTENSIONS = Set.of("jpg", "png", "jpeg");
 
   private final S3Presigner presigner;
   private final S3Properties properties;
@@ -47,8 +42,8 @@ public class PresignedUploadService {
     this.properties = properties;
   }
 
-  public CreateUploadResponse createUpload(CreateUploadRequest request) {
-    validate(request);
+  public PresignUploadUrlResponse createUpload(PresignUploadUrlRequest request) {
+    this.validate(request);
 
     String extension = getExtension(request.getFilename());
 
@@ -73,7 +68,7 @@ public class PresignedUploadService {
 
     Instant expiresAt = Instant.now().plus(EXPIRATION);
 
-    return new CreateUploadResponse(
+    return new PresignUploadUrlResponse(
         key,
         presignedRequest.url().toString(),
         "PUT",
@@ -82,13 +77,40 @@ public class PresignedUploadService {
     );
   }
 
-  private void validate(CreateUploadRequest request) {
+  public PresignPreviewUrlResponse createPresignPreviewUrl(String key) {
+    GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            .bucket(properties.getBucket())
+            .key(key)
+            .build();
+
+    GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+            .signatureDuration(EXPIRATION) // Set Expire of URL
+            .getObjectRequest(getObjectRequest)
+            .build();
+
+    PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(presignRequest);
+
+    return PresignPreviewUrlResponse.builder().url(presignedGetObjectRequest.url().toString()).build();
+  }
+
+
+  // === Utils ===
+  private void validate(PresignUploadUrlRequest request) {
     if (Objects.isNull(request)) {
       throw new IllegalArgumentException("Upload request is required");
     }
 
     if (!StringUtils.hasText(request.getFilename())) {
       throw new IllegalArgumentException("Filename is required");
+    }
+
+    String getExtensionWithoutDot = this.getExtension(request.getFilename()).replace(".", "");
+    if (!ALLOWED_FILE_EXTENSIONS.contains(getExtensionWithoutDot)) {
+      throw new IllegalArgumentException("Unsupported file extension");
+    }
+
+    if (request.getSize() > MAX_FILE_SIZE) {
+      throw new IllegalArgumentException("File exceeds the 2MB limit");
     }
 
 //    if (!ALLOWED_CONTENT_TYPES.contains(request.getContentType())) {
@@ -114,8 +136,8 @@ public class PresignedUploadService {
     }
 
     String extension = cleanName
-        .substring(dotIndex)
-        .toLowerCase();
+            .substring(dotIndex)
+            .toLowerCase();
 
     if(!extension.matches("\\.[a-z0-9]{1,10}")) {
       return "";
@@ -124,20 +146,5 @@ public class PresignedUploadService {
     return extension;
   }
 
-  public String createPreviewUrl(String key) {
-    GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-            .bucket(properties.getBucket())
-            .key(key)
-            .build();
-
-    GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-            .signatureDuration(Duration.ofMinutes(15))
-            .getObjectRequest(getObjectRequest)
-            .build();
-
-    PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(presignRequest);
-
-    return presignedGetObjectRequest.url().toString();
-  }
 
 }

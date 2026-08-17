@@ -1,5 +1,6 @@
 package com.project.file_upload_rustfs.config;
 
+import java.net.URI;
 import java.time.Duration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -49,26 +50,27 @@ public class S3Config {
         .build();
   }
 
-//  @Bean
-//  S3Presgner s3Presigner(S3Properties properties) {
-//    AwsBasicCredentials credentials = AwsBasicCredentials.create(
-//        properties.getAccessKey(),
-//        properties.getSecretKey()
-//    );
-//
-//    return S3Presigner.builder()
-//        .endpointOverride(properties.getEndpoint())
-//        .region(Region.of(properties.getRegion()))
-//        .credentialsProvider(
-//            StaticCredentialsProvider.create(credentials)
-//        )
-//        .serviceConfiguration(
-//            S3Configuration.builder()
-//                .pathStyleAccessEnabled(true)
-//                .checksumValidationEnabled(false)
-//                .build()
-//        )
-//        .build();
-//  }
+    @Bean(destroyMethod = "close")
+    public S3Presigner s3Presigner(S3Properties properties) {
+        AwsBasicCredentials credentials = AwsBasicCredentials.create(
+                properties.getAccessKey(),
+                properties.getSecretKey()
+        );
+
+
+        S3Configuration s3Configuration = S3Configuration.builder()
+                .pathStyleAccessEnabled(true)
+                .checksumValidationEnabled(false)
+                .build();
+
+        return S3Presigner.builder()
+                .endpointOverride(URI.create(properties.getEndpoint().toString()))
+                .region(Region.of(properties.getRegion()))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(credentials)
+                )
+                .serviceConfiguration(s3Configuration)
+                .build();
+    }
 
 }

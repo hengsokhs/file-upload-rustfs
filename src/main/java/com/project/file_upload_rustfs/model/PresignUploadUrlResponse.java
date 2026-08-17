@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreateUploadResponse {
+public class PresignUploadUrlResponse {
   private String key;
   private String uploadUrl;
   private String method;

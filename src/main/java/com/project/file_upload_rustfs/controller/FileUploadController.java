@@ -1,9 +1,6 @@
 package com.project.file_upload_rustfs.controller;
 
-import com.project.file_upload_rustfs.model.CreateUploadRequest;
-import com.project.file_upload_rustfs.model.CreateUploadResponse;
-import com.project.file_upload_rustfs.model.PreviewUploadResponse;
-import com.project.file_upload_rustfs.model.UploadedResultRustfsDTO;
+import com.project.file_upload_rustfs.model.*;
 import com.project.file_upload_rustfs.service.FileStorageService;
 import com.project.file_upload_rustfs.service.PresignedUploadService;
 import java.io.IOException;
@@ -56,9 +53,14 @@ public class FileUploadController {
     return new PreviewUploadResponse(url);
   }
 
-  @PostMapping("/upload/presign")
+  @PostMapping("/presign/upload")
   @ResponseStatus(HttpStatus.CREATED)
-  public CreateUploadResponse createUpload(@RequestBody CreateUploadRequest request) {
+  public PresignUploadUrlResponse createUpload(@RequestBody PresignUploadUrlRequest request) {
     return presignedUploadService.createUpload(request);
+  }
+
+  @GetMapping("/presign/preview")
+  public PresignPreviewUrlResponse createPresignPreviewUrl(@RequestParam("key") String key) {
+    return presignedUploadService.createPresignPreviewUrl(key);
   }
 }
