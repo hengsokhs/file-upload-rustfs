@@ -1,6 +1,6 @@
 package com.project.file_upload_rustfs.service;
 
-import com.project.file_upload_rustfs.config.S3Properties;
+import com.project.file_upload_rustfs.config.RustFsProperties;
 import com.project.file_upload_rustfs.model.PresignUploadUrlRequest;
 import com.project.file_upload_rustfs.model.PresignUploadUrlResponse;
 import java.time.Duration;
@@ -32,11 +32,11 @@ public class PresignedUploadService {
   private static final Set<String> ALLOWED_FILE_EXTENSIONS = Set.of("jpg", "png", "jpeg");
 
   private final S3Presigner presigner;
-  private final S3Properties properties;
+  private final RustFsProperties properties;
 
   public PresignedUploadService(
       S3Presigner presigner,
-      S3Properties properties
+      RustFsProperties properties
   ) {
     this.presigner = presigner;
     this.properties = properties;

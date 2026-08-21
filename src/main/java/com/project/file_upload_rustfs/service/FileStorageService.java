@@ -1,8 +1,7 @@
 package com.project.file_upload_rustfs.service;
 
-import com.project.file_upload_rustfs.config.S3Properties;
+import com.project.file_upload_rustfs.config.RustFsProperties;
 import com.project.file_upload_rustfs.model.UploadedResultRustfsDTO;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
@@ -28,12 +27,12 @@ public class FileStorageService {
   private static final DateTimeFormatter DIRECTORY_DATE = DateTimeFormatter.ofPattern("uuuu/MM/dd");
 
   private final S3Client s3Client;
-  private final S3Properties properties;
+  private final RustFsProperties properties;
   private final S3Presigner s3Presigner;
 
   public FileStorageService(
       S3Client s3Client,
-      S3Properties properties,
+      RustFsProperties properties,
       S3Presigner s3Presigner
   ) {
     this.s3Client = s3Client;

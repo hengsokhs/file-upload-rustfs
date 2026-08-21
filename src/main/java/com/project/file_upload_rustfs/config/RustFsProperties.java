@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = "storage.rustfs")
-public class S3Properties {
+public class RustFsProperties {
   private URI endpoint;
   private String region;
   private String accessKey;
