@@ -1,7 +1,7 @@
-package com.project.file_upload_rustfs.controller;
+package com.project.file.upload.rustfs.controller;
 
-import com.project.file_upload_rustfs.model.UploadedResultRustfsDTO;
-import com.project.file_upload_rustfs.service.FileStorageService;
+import com.project.file.upload.rustfs.model.UploadedResultRustfsDTO;
+import com.project.file.upload.rustfs.service.FileStorageService;
 import java.io.IOException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

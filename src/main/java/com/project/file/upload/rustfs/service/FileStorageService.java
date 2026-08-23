@@ -1,8 +1,8 @@
-package com.project.file_upload_rustfs.service;
+package com.project.file.upload.rustfs.service;
 
-import com.project.file_upload_rustfs.config.S3Properties;
-import com.project.file_upload_rustfs.model.UploadedResultRustfsDTO;
-import java.io.File;
+import com.project.file.upload.rustfs.config.S3Properties;
+import com.project.file.upload.rustfs.model.UploadedResultRustfsDTO;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;

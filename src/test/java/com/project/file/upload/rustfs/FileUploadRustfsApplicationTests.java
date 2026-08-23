@@ -1,4 +1,4 @@
-package com.project.file_upload_rustfs;
+package com.project.file.upload.rustfs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
