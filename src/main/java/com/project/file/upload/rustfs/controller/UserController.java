@@ -1,8 +1,8 @@
-package com.project.file_upload_rustfs.controller;
+package com.project.file.upload.rustfs.controller;
 
-import com.project.file_upload_rustfs.model.CreateUserRequest;
-import com.project.file_upload_rustfs.model.CreateUserResponse;
-import com.project.file_upload_rustfs.service.UserService;
+import com.project.file.upload.rustfs.model.CreateUserRequest;
+import com.project.file.upload.rustfs.model.CreateUserResponse;
+import com.project.file.upload.rustfs.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -1,10 +1,9 @@
-package com.project.file_upload_rustfs.service;
+package com.project.file.upload.rustfs.service;
 
-import com.project.file_upload_rustfs.entity.UserEntity;
-import com.project.file_upload_rustfs.model.CreateUserRequest;
-import com.project.file_upload_rustfs.model.CreateUserResponse;
-import com.project.file_upload_rustfs.repository.UserRepository;
-import org.springframework.orm.jpa.EntityManagerFactoryInfo;
+import com.project.file.upload.rustfs.entity.UserEntity;
+import com.project.file.upload.rustfs.model.CreateUserRequest;
+import com.project.file.upload.rustfs.model.CreateUserResponse;
+import com.project.file.upload.rustfs.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

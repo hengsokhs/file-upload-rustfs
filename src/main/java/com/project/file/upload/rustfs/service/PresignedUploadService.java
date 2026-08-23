@@ -1,8 +1,8 @@
-package com.project.file_upload_rustfs.service;
+package com.project.file.upload.rustfs.service;
 
-import com.project.file_upload_rustfs.config.S3Properties;
-import com.project.file_upload_rustfs.model.PresignUploadUrlRequest;
-import com.project.file_upload_rustfs.model.PresignUploadUrlResponse;
+import com.project.file.upload.rustfs.config.S3Properties;
+import com.project.file.upload.rustfs.model.PresignUploadUrlRequest;
+import com.project.file.upload.rustfs.model.PresignUploadUrlResponse;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import com.project.file_upload_rustfs.model.PresignPreviewUrlResponse;
+import com.project.file.upload.rustfs.model.PresignPreviewUrlResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;

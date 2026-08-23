@@ -1,8 +1,8 @@
-package com.project.file_upload_rustfs.controller;
+package com.project.file.upload.rustfs.controller;
 
-import com.project.file_upload_rustfs.model.*;
-import com.project.file_upload_rustfs.service.FileStorageService;
-import com.project.file_upload_rustfs.service.PresignedUploadService;
+import com.project.file.upload.rustfs.model.*;
+import com.project.file.upload.rustfs.service.FileStorageService;
+import com.project.file.upload.rustfs.service.PresignedUploadService;
 import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

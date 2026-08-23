@@ -1,4 +1,4 @@
-package com.project.file_upload_rustfs.entity;
+package com.project.file.upload.rustfs.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

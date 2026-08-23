@@ -1,4 +1,4 @@
-package com.project.file_upload_rustfs.config;
+package com.project.file.upload.rustfs.config;
 
 import java.net.URI;
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package com.project.file_upload_rustfs.model;
+package com.project.file.upload.rustfs.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
